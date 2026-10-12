@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Target,
   Eye,
@@ -155,9 +156,9 @@ function About() {
               learning journey.
             </p>
 
-            <a href="/register" className="btn btn-primary">
+            <Link to="/register" className="btn btn-primary">
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
       </section>
