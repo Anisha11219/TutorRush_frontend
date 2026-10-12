@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   GraduationCap,
   Mail,
@@ -12,8 +12,6 @@ import {
 import MainLayout from '../layouts/MainLayout.jsx';
 
 function Login() {
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -124,7 +122,6 @@ function Login() {
                   >
                     <option value="student">Student</option>
                     <option value="tutor">Tutor</option>
-                    <option value="admin">Admin</option>
                   </select>
                 </div>
 
