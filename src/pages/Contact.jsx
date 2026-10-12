@@ -33,14 +33,9 @@ function Contact() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    // Demo only. Connect this form to the backend contact API later.
+    // The form is kept filled so no typed message is lost.
     setSubmitted(true);
-
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
   };
 
   return (
@@ -127,9 +122,9 @@ function Contact() {
 
             {submitted && (
               <div className="contact-success" role="status">
-                Thank you! Your form was submitted successfully.
-                Please note that this demo does not send messages
-                to a server yet.
+                Your message was not sent. This demo is not connected to a
+                server yet, so please email us at support@tutorrush.com
+                instead.
               </div>
             )}
 
@@ -144,6 +139,7 @@ function Contact() {
                   placeholder="Enter your full name"
                   value={formData.name}
                   onChange={handleChange}
+                  autoComplete="name"
                   required
                 />
               </div>
@@ -158,6 +154,7 @@ function Contact() {
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleChange}
+                  autoComplete="email"
                   required
                 />
               </div>
