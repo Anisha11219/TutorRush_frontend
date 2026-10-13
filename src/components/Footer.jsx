@@ -1,13 +1,6 @@
 import { Link } from 'react-router-dom';
-import {
-  GraduationCap,
-  Mail,
-  MapPin,
-  Phone,
-  Github,
-  Linkedin,
-  Instagram
-} from 'lucide-react';
+import { GraduationCap, Mail, MapPin, Phone } from "lucide-react";
+import { Github, Linkedin, Instagram } from "./SocialIcons.jsx";
 
 function Footer() {
   return (
