@@ -10,12 +10,10 @@ import {
   Home,
   ShieldCheck
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext.jsx';
 
 function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
-  const { logout } = useAuth();
 
   const navItems = [
     {
@@ -33,8 +31,8 @@ function AdminLayout({ children }) {
   const closeSidebar = () => setSidebarOpen(false);
 
   const handleLogout = () => {
-    logout();
-    navigate('/login', { replace: true });
+    // Connect to the authentication context later.
+    navigate('/login');
   };
 
   return (

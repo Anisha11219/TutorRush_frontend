@@ -13,12 +13,10 @@ import {
   LogOut,
   Home
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext.jsx';
 
 function TutorLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
-  const { logout } = useAuth();
 
   const navItems = [
     {
@@ -56,8 +54,8 @@ function TutorLayout({ children }) {
   const closeSidebar = () => setSidebarOpen(false);
 
   const handleLogout = () => {
-    logout();
-    navigate('/login', { replace: true });
+    // Connect this to the authentication context later.
+    navigate('/login');
   };
 
   return (

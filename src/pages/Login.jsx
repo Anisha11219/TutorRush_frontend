@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   GraduationCap,
   Mail,
@@ -10,14 +10,8 @@ import {
   BookOpen
 } from 'lucide-react';
 import MainLayout from '../layouts/MainLayout.jsx';
-import { useAuth, ROLE_HOME } from '../context/AuthContext.jsx';
-import { ROLES } from '../constants/schema.js';
 
 function Login() {
-  const { login } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -50,15 +44,13 @@ function Login() {
     setLoading(true);
     setError('');
 
-    // Demo login only: no password is verified. Connect to the backend API later.
-    const role = ROLES[formData.role.toUpperCase()];
-    const user = login({ email: formData.email, role });
-
-    const from = location.state?.from?.pathname;
-    const roleBase = `/${formData.role}`;
-    const target = from && from.startsWith(roleBase) ? from : ROLE_HOME[user.role];
-
-    navigate(target, { replace: true });
+    // Demo login only. Connect this form to the backend API later.
+    setTimeout(() => {
+      setLoading(false);
+      setError(
+        'Backend authentication is not connected yet. Please connect the login API to continue.'
+      );
+    }, 500);
   };
 
   return (
@@ -130,7 +122,6 @@ function Login() {
                   >
                     <option value="student">Student</option>
                     <option value="tutor">Tutor</option>
-                    <option value="admin">Admin</option>
                   </select>
                 </div>
 
@@ -205,8 +196,8 @@ function Login() {
               </p>
 
               <p className="auth-demo-note">
-                Demo mode: any email and password signs you in as the selected
-                role. Real login will need backend authentication.
+                This is the frontend login page. Real login requires backend
+                authentication and role verification.
               </p>
             </div>
           </div>
