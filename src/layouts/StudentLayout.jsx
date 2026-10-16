@@ -12,10 +12,12 @@ import {
   LogOut,
   Home
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext.jsx';
 
 function StudentLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const navItems = [
     {
@@ -46,8 +48,8 @@ function StudentLayout({ children }) {
   ];
 
   const handleLogout = () => {
-    // Authentication and logout logic will be connected later.
-    navigate('/login');
+    logout();
+    navigate('/login', { replace: true });
   };
 
   const closeSidebar = () => setSidebarOpen(false);

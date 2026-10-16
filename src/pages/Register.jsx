@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   GraduationCap,
   User,
@@ -11,10 +11,15 @@ import {
   BookOpen
 } from 'lucide-react';
 import MainLayout from '../layouts/MainLayout.jsx';
+import { useAuth, ROLE_HOME } from '../context/AuthContext.jsx';
+import { ROLES } from '../constants/schema.js';
 
 const MIN_PASSWORD_LENGTH = 8;
 
 function Register() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -59,13 +64,14 @@ function Register() {
     setLoading(true);
     setError('');
 
-    // Demo only. Connect this form to the backend registration API later.
-    setTimeout(() => {
-      setLoading(false);
-      setError(
-        'Backend registration is not connected yet. Please connect the register API to continue.'
-      );
-    }, 500);
+    // Demo only: nothing is saved to a server. Connect to the backend API later.
+    const user = login({
+      name: formData.name,
+      email: formData.email,
+      role: ROLES[formData.role.toUpperCase()]
+    });
+
+    navigate(ROLE_HOME[user.role], { replace: true });
   };
 
   return (
@@ -243,8 +249,8 @@ function Register() {
               </p>
 
               <p className="auth-demo-note">
-                This is the frontend registration page. Real sign-up requires
-                backend authentication.
+                Demo mode: your account is not saved on a server. Real sign-up
+                will need backend authentication.
               </p>
             </div>
           </div>
