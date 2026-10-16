@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Search,
   BookOpen,
@@ -12,8 +13,24 @@ import {
   Star
 } from 'lucide-react';
 import MainLayout from '../layouts/MainLayout.jsx';
+import '../styles/hero-fix.css';
+
+const heroTopics = ['Mathematics', 'Programming', 'Science'];
 
 function Home() {
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
+
+  const goToSearch = (text) => {
+    const term = text.trim();
+    navigate(term ? `/student/tutors?q=${encodeURIComponent(term)}` : '/student/tutors');
+  };
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    goToSearch(query);
+  };
+
   return (
     <MainLayout>
       <section className="hero">
@@ -65,20 +82,32 @@ function Home() {
               <h3>What do you want to learn today?</h3>
               <p>Find help with the topic you're struggling with.</p>
 
-              <div className="hero-search-item">
+              <form className="hero-search-form" onSubmit={handleSearch} role="search">
                 <Search size={19} />
-                <span>Search a subject or topic</span>
-              </div>
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search a subject or topic"
+                  aria-label="Search a subject or topic"
+                />
+              </form>
 
               <div className="hero-topic-list">
-                <span>Mathematics</span>
-                <span>Programming</span>
-                <span>Science</span>
+                {heroTopics.map((topic) => (
+                  <button type="button" key={topic} onClick={() => goToSearch(topic)}>
+                    {topic}
+                  </button>
+                ))}
               </div>
 
-              <Link to="/register" className="hero-card-button">
+              <button
+                type="button"
+                className="hero-card-button"
+                onClick={() => goToSearch(query)}
+              >
                 Explore Tutors <ArrowRight size={17} />
-              </Link>
+              </button>
             </div>
 
             <div className="floating-card floating-card-top">
