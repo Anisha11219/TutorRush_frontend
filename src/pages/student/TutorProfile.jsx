@@ -229,7 +229,11 @@ function TutorProfile() {
                 )}
                 <div>
                   <span>Teaching mode</span>
-                  <strong>{tutor.mode || 'Online / Offline'}</strong>
+                  <strong>
+                    {Array.isArray(tutor.mode)
+                    ? tutor.mode.join(' / ')
+                    : tutor.mode || 'Online / Offline'}
+                  </strong>
                 </div>
               </div>
 
