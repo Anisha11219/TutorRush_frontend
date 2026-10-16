@@ -1,20 +1,36 @@
 .hero-visual {
-  padding: 72px 28px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
-.floating-card-top {
-  top: 6px;
-  right: 0;
+.hero-visual .floating-card {
+  position: relative;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  width: min(100%, 390px);
+  max-width: 100%;
 }
 
-.floating-card-bottom {
-  bottom: 6px;
-  left: 0;
+.hero-visual .floating-card-top {
+  order: -1;
 }
 
-.floating-card {
-  max-width: calc(100% - 8px);
+.hero-visual .floating-card-bottom {
+  order: 1;
+}
+
+.hero-visual .main-hero-card {
+  order: 0;
+}
+
+.hero-visual .hero-decoration {
+  z-index: 0;
 }
 
 .hero-search-form {
@@ -64,11 +80,7 @@
 }
 
 @media (max-width: 650px) {
-  .hero-visual {
-    padding: 64px 0;
-  }
-
-  .floating-card {
+  .hero-visual .floating-card {
     padding: 10px 12px;
   }
 }
