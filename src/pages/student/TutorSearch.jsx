@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   Search,
   SlidersHorizontal,
@@ -7,7 +7,6 @@ import {
   MapPin,
   Video,
   GraduationCap,
-  IndianRupee,
   Clock,
   UserRound,
   X,
@@ -117,7 +116,8 @@ const sampleTutors = [
 ];
 
 function TutorSearch() {
-  const [searchText, setSearchText] = useState('');
+  const [searchParams] = useSearchParams();
+  const [searchText, setSearchText] = useState(searchParams.get('q') ?? '');
   const [subject, setSubject] = useState('All Subjects');
   const [classMode, setClassMode] = useState('Any Mode');
   const [minimumRating, setMinimumRating] = useState('0');
