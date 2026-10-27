@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   GraduationCap,
   Mail,
@@ -9,9 +9,13 @@ import {
   ArrowRight,
   BookOpen
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext.jsx';
 import MainLayout from '../layouts/MainLayout.jsx';
 
 function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -33,7 +37,7 @@ function Login() {
     setError('');
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!formData.email.trim() || !formData.password) {
@@ -44,13 +48,15 @@ function Login() {
     setLoading(true);
     setError('');
 
-    // Demo login only. Connect this form to the backend API later.
-    setTimeout(() => {
+    try {
+      const user = await login(formData.email.trim(), formData.password);
+      const home = `/${String(user.role).toLowerCase()}/dashboard`;
+      navigate(location.state?.from?.pathname || home, { replace: true });
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed. Please check your details and try again.');
+    } finally {
       setLoading(false);
-      setError(
-        'Backend authentication is not connected yet. Please connect the login API to continue.'
-      );
-    }, 500);
+    }
   };
 
   return (

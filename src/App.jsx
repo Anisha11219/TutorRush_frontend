@@ -1,5 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+
 import Home from './pages/Home.jsx';
 import About from './pages/About.jsx';
 import Contact from './pages/Contact.jsx';
@@ -26,8 +28,6 @@ import BookingRequests from './pages/tutor/BookingRequests.jsx';
 import AdminDashboard from './pages/admin/AdminDashboard.jsx';
 import TutorVerification from './pages/admin/TutorVerification.jsx';
 
-// Portal routes are open while the app is frontend-only.
-// Wrap each group in <ProtectedRoute allowedRoles={[...]}> once AuthContext exists.
 function App() {
   return (
     <Routes>
@@ -38,26 +38,32 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
 
-      <Route path="/student" element={<Navigate to="/student/dashboard" replace />} />
-      <Route path="/student/dashboard" element={<StudentDashboard />} />
-      <Route path="/student/profile" element={<StudentProfile />} />
-      <Route path="/student/tutors" element={<TutorSearch />} />
-      <Route path="/student/tutors/:id" element={<StudentTutorProfile />} />
-      <Route path="/student/requirements/new" element={<CreateRequirement />} />
-      <Route path="/student/bookings" element={<BookingHistory />} />
-      <Route path="/student/reviews" element={<Reviews />} />
+      <Route element={<ProtectedRoute allowedRoles={['STUDENT']} />}>
+        <Route path="/student" element={<Navigate to="/student/dashboard" replace />} />
+        <Route path="/student/dashboard" element={<StudentDashboard />} />
+        <Route path="/student/profile" element={<StudentProfile />} />
+        <Route path="/student/tutors" element={<TutorSearch />} />
+        <Route path="/student/tutors/:id" element={<StudentTutorProfile />} />
+        <Route path="/student/requirements/new" element={<CreateRequirement />} />
+        <Route path="/student/bookings" element={<BookingHistory />} />
+        <Route path="/student/reviews" element={<Reviews />} />
+      </Route>
 
-      <Route path="/tutor" element={<Navigate to="/tutor/dashboard" replace />} />
-      <Route path="/tutor/dashboard" element={<TutorDashboard />} />
-      <Route path="/tutor/profile" element={<TutorProfileForm />} />
-      <Route path="/tutor/qualifications" element={<Qualifications />} />
-      <Route path="/tutor/availability" element={<Availability />} />
-      <Route path="/tutor/pricing" element={<Pricing />} />
-      <Route path="/tutor/bookings" element={<BookingRequests />} />
+      <Route element={<ProtectedRoute allowedRoles={['TUTOR']} />}>
+        <Route path="/tutor" element={<Navigate to="/tutor/dashboard" replace />} />
+        <Route path="/tutor/dashboard" element={<TutorDashboard />} />
+        <Route path="/tutor/profile" element={<TutorProfileForm />} />
+        <Route path="/tutor/qualifications" element={<Qualifications />} />
+        <Route path="/tutor/availability" element={<Availability />} />
+        <Route path="/tutor/pricing" element={<Pricing />} />
+        <Route path="/tutor/bookings" element={<BookingRequests />} />
+      </Route>
 
-      <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-      <Route path="/admin/dashboard" element={<AdminDashboard />} />
-      <Route path="/admin/verification" element={<TutorVerification />} />
+      <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/verification" element={<TutorVerification />} />
+      </Route>
 
       <Route path="*" element={<NotFound />} />
     </Routes>
