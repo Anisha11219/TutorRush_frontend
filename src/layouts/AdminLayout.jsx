@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext.jsx';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
   GraduationCap,
@@ -14,6 +15,7 @@ import {
 function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const navItems = [
     {
@@ -31,7 +33,7 @@ function AdminLayout({ children }) {
   const closeSidebar = () => setSidebarOpen(false);
 
   const handleLogout = () => {
-    // Connect to the authentication context later.
+    logout();
     navigate('/login');
   };
 

@@ -4,7 +4,6 @@ import {
   UserRound,
   GraduationCap,
   BookOpen,
-  BriefcaseBusiness,
   MapPin,
   Save,
   CheckCircle2
